@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require('cors');
+const morgan = require("morgan");
 
 const app = express();
 app.use(cors());
@@ -36,6 +37,16 @@ let persons = [
 let currentDate = new Date();
 
 
+morgan.token("data", (req) => JSON.stringify(req.body));
+app.use(
+    morgan(":method :url :status :res[content-length] - :response-time ms :data")
+);
+
+
+
+
+
+
 const getAll = async () => {
     try {
         const response = await axios.get(baseUrl);
@@ -51,8 +62,8 @@ app.get("/", (req, res) => {
 });
 
 app.get("/info", (req, res) => {
-res.send(`<p>Phonebook has info for 2 people</p> <p> ${currentDate}</p>`)
-   
+    res.send(`<p>Phonebook has info for 2 people</p> <p> ${currentDate}</p>`)
+
 });
 
 
