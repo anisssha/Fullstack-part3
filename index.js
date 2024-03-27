@@ -5,6 +5,7 @@ const morgan = require("morgan");
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(express.static('dist'))
 
 let persons = [
     {
@@ -88,7 +89,7 @@ app.delete("/api/persons/:id", (req, res) => {
     const id = Number(req.params.id);
     persons = persons.filter((person) => person.id !== id);
 
-    res.sendStatus(204);
+    res.status(204).json({info:"sucess"});
 });
 app.post("/api/persons", (req, res) => {
     const generateId = () => {
